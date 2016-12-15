@@ -12,30 +12,19 @@ class App extends Component {
         this.state = {
             "photos" : [
                 {
-                    "src": "https://www.dropbox.com/s/k1t3w0pj8qnbfgh/child-childrens-baby-children-s.jpg?raw=1",
-                    "likes": 49,
-                    "comments": ["This is great!", "This is really bad"],
+                    "src": "https://images.pexels.com/photos/167890/pexels-photo-167890.jpeg?h=350&auto=compress",
                     "tags":["child","road","tag1"],
-                    "date": Date.now(),
-                    "width": 0,
-                    "height": 0,
-                    "aspectRatio":1,
                     "lightboxImage":{
-                        "src": 'https://preview2.netcarshow.com/Honda-Accord_HB-1985-hd.jpg',
+                        "src": 'https://images.pexels.com/photos/167890/pexels-photo-167890.jpeg?h=350&auto=compress',
                         "caption": 'Likes: 52'
                     }
                 },
                     {
-                        "src": "https://www.dropbox.com/s/loox1o0574nanwj/fashion-woman-cute-airport.jpg?raw=1",
-                        "likes": 52,
-                        "comments": ["This is great!", "This is really bad"],
-                        "date": Date.now(),
+                        "src": "https://images.pexels.com/photos/192774/pexels-photo-192774.jpeg?h=350&auto=compress",
                         "tags":["fashion","woman","airport"],
-                        "width": 681,
-                        "height": 1024,
                         "lightboxImage":{
-                            "src": 'https://www.dropbox.com/s/loox1o0574nanwj/fashion-woman-cute-airport.jpg?raw=1',
-                            "caption": 'Likes: 52'
+                            "src": 'https://images.pexels.com/photos/192774/pexels-photo-192774.jpeg?h=350&auto=compress',
+                            "caption": 'Likes: 54'
                         }
                     },
                 ]
