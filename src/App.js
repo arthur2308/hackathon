@@ -46,6 +46,7 @@ class App extends Component {
 
     componentDidMount() {
         window.addEventListener('scroll', this.handleScroll);
+        this.loadMorePhotos();
     }
 
     handleScroll() {
@@ -59,22 +60,28 @@ class App extends Component {
     }
 
     loadMorePhotos() {
+        var newPhotos = null;
+
+        $.ajax({
+            url: 'http://localhost:5000/api/images',
+            async: false,
+            success: function(data) {
+
+                newPhotos = data;
+                //console.log(JSON.stringify(this.state.photos.concat(newPhotos)));
+                console.log(newPhotos);
+                /*newPhotos = data.images
+                    .forEach(image => console.log(image));*/
+
+                //console.log(newPhotos);
+            },
+            error: function(err) {
+                console.error(err.message);
+            }
+        });
+
         this.setState({
-            "photos" : this.state.photos.concat([
-                {
-                    "src": "https://www.dropbox.com/s/uuth6vy0hahw0mg/pexels-photo-175696.jpeg?raw=1",
-                    "likes": 52,
-                    "comments": ["This is great!", "This is really bad"],
-                    "date": Date.now(),
-                    "width": 681,
-                    "tags":["pexel","dropbox","1738"],
-                    "height": 1024,
-                    "lightboxImage":{
-                        "src": 'https://www.dropbox.com/s/uuth6vy0hahw0mg/pexels-photo-175696.jpeg?raw=1',
-                        "caption": 'Likes: 52'
-                    }
-                }
-            ])
+            "photos" : this.state.photos ? this.state.photos.concat(newPhotos.images) : newPhotos.images
         });
     }
 
