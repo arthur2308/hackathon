@@ -9,43 +9,26 @@ app.use(function(req, res, next) {
   next();
 });
 
-// console.log(getData['FirebaseClient']());
-// respond with "hello world" when a GET request is made to the homepag
+// sample home page request
 app.get('/', function (req, res) {
-	// this should serve the main React application
+	// TODO: this should serve the main React application
 	res.send('hello world');
 });
 
 
-// GET method route
+// GET method route for all images
 app.get('/api/images', function (req, res) {	
-  // TODO: build data object here
-  /*
-  res.send({
-  	'images': [
-		{
-			'image1': {
-	            "src": "https://www.dropbox.com/s/k1t3w0pj8qnbfgh/child-childrens-baby-children-s.jpg?raw=1",
-	            "likes": 49,
-	            "comments": ["This is great!", "This is really bad"],
-	            "tags":["child","road","tag1"]
-			}
-		}, 
-		{
-			'image2': {
-	            "src": "https://www.dropbox.com/s/k1t3w0pj8qnbfgh/child-childrens-baby-children-s.jpg?raw=1",
-	            "likes": 49,
-	            "comments": ["This is great!", "This is really bad"],
-	            "tags":["child","road","tag1"]
-	        }
-		}  	
-  	]
-  });*/
-  res.json(images);
+  res.json(images.getAll());
+});
+
+// GET method route for specific number of images
+app.get('/api/images/:numberImages', function(req, res) {
+	var numberImages = Number(req.params['numberImages']);
+	res.send(images.getLimit(numberImages));
 });
 
 
 app.listen(5000, function() {
-  console.log('Example app listening on port 3000')
+  console.log('Example app listening on port 5000');
 });
 

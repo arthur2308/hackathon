@@ -38,13 +38,13 @@ function getTags(url) {
 	app.models.predict(Clarifai.GENERAL_MODEL, 'https://www.dropbox.com/s/n2zbkj0nxx8lr2u/pexels-photo-179909.jpeg?raw=1').then(
 	  function(response) {
 	  	// TODO: save the response
-	  	console.log('FULL RESPONSE');
-	    console.log(response);
-	    console.log('RESULTS');
+	  	// console.log('FULL RESPONSE');
+	   //  console.log(response);
+	   //  console.log('RESULTS');
 	    var response_data = response.data.outputs[0];
 	    // prints all the generated tags for the images 
 	    response_data['data']['concepts'].forEach((x) => {
-	    	console.log(x['name']);
+	    	// console.log(x['name']);
 	    	tags.push(x['name']);
 	    });
 	  },
@@ -75,10 +75,38 @@ function createImageComponent(url) {
 	return component;
 }
 
-// generate a bunch of image components
-for (var i = 0; i < 10; i++) {
-	images['images'].push(createImageComponent('https://images.pexels.com/photos/108061/pexels-photo-108061.jpeg?h=350&auto=compress'));
+function createAllComponents() {
+	// generate a bunch of image components
+	for (var i = 0; i < urls.length; i++) {
+		images['images'].push(createImageComponent(urls[i]));
+	}
 }
 
-module.exports = images;
+function getAllImages() {
+	return images;
+}
+
+// return passed number of random image components
+function getLimit(number) {
+	var totalImages = urls.length;
+	var result = {
+		'images': []
+	};
+	for (var i = 0; i < number; i++) {
+		var randomIndex = Math.floor((Math.random() * totalImages) + 1);
+		result['images'].push(images['images'][randomIndex]);
+	}
+	return result;
+}
+
+function main() {
+	createAllComponents();
+}
+
+main();
+
+module.exports = {
+	getAll: getAllImages,
+	getLimit: getLimit
+};
 
