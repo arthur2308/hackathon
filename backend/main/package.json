@@ -1,0 +1,17 @@
+{
+  "name": "main-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "clarifai": "^2.0.18",
+    "express": "^4.14.0",
+    "faker": "^3.1.0",
+    "firebase": "^3.6.4"
+  }
+}

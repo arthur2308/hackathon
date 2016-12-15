@@ -1,0 +1,17 @@
+{
+  "name": "clarifai-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cheerio": "^0.22.0",
+    "clarifai": "^2.0.18",
+    "dropbox": "^2.5.0",
+    "request": "^2.79.0"
+  }
+}

@@ -1,0 +1,15 @@
+Backend Stack
+----------------------------------------------------
+
+- Figure out a way to store images and their corresponding tags
+
+- Firebase: main data store for getting information
+Sample schema for images:
+
+{
+	
+
+}
+
+
+- Clarifai: generate image tags to be stored
