@@ -1,6 +1,6 @@
 var express = require('express');
 var app = express();
-var getData = require('./FirebaseClient');
+//var getData = require('./FirebaseClient');
 var images = require('./create-data.js');
 
 
