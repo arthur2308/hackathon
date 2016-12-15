@@ -71,10 +71,6 @@ function createImageComponent(url) {
 	for (var i = 0; i < numComments; i++) {
 		component['comments'].push(faker.lorem.sentence());
 	}
-    // "src": "https://images.pexels.com/photos/108061/pexels-photo-108061.jpeg?h=350&auto=compress",
-    // "likes": 49,
-    // "comments": ["This is great!", "This is really bad"],
-    // "tags":["child","road","tag1"]
 
 	return component;
 }

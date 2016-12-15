@@ -1,8 +1,13 @@
 var express = require('express');
 var app = express();
-var getData = require('./FirebaseClient');
 var images = require('./create-data.js');
 
+
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
 
 // console.log(getData['FirebaseClient']());
 // respond with "hello world" when a GET request is made to the homepag
@@ -36,7 +41,7 @@ app.get('/api/images', function (req, res) {
 		}  	
   	]
   });*/
-  res.send(images);
+  res.json(images);
 });
 
 
