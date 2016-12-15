@@ -15,15 +15,13 @@ var urls = [
 	'https://images.pexels.com/photos/212236/pexels-photo-212236.jpeg?h=350&auto=compress',
 	'https://images.pexels.com/photos/217860/pexels-photo-217860.jpeg?h=350&auto=compress',
 	'https://images.pexels.com/photos/24155/pexels-photo.jpg?h=350&auto=compress',
-	'https://images.pexels.com/photos/24155/pexels-photo.jpg?h=350&auto=compress',
+	'https://images.pexels.com/photos/24155/pexels-photo.jpg?h=350&auto=compress'
 ];
 
 
 var images = {
 	'images': []
 };
-
-
 
 
 function getTags(url) {
@@ -35,12 +33,8 @@ function getTags(url) {
 	var tags = [];
 
 	// parameter: image url 
-	app.models.predict(Clarifai.GENERAL_MODEL, 'https://www.dropbox.com/s/n2zbkj0nxx8lr2u/pexels-photo-179909.jpeg?raw=1').then(
+	app.models.predict(Clarifai.GENERAL_MODEL, url).then(
 	  function(response) {
-	  	// TODO: save the response
-	  	// console.log('FULL RESPONSE');
-	   //  console.log(response);
-	   //  console.log('RESULTS');
 	    var response_data = response.data.outputs[0];
 	    // prints all the generated tags for the images 
 	    response_data['data']['concepts'].forEach((x) => {
@@ -59,18 +53,25 @@ function getTags(url) {
 
 
 function createImageComponent(url) {
+	var numLikes = Math.floor((Math.random() * 2000) + 1);
 	var component = {
 		'src' : url,
-		'likes' : Math.floor((Math.random() * 2000) + 1),
+		'likes' : numLikes,
 		// 'comments': ['random-comment1', 'random-comment-2'],
-		'tags': getTags(url)
+		'tags': getTags(url),
+		'lightboxImage': {
+			'src' : url,
+			'caption' : 'Likes: ' + numLikes
+		}
 	};
 
+	/*
 	component['comments'] = [];
 	var numComments = Math.floor((Math.random() * 15) + 1);
 	for (var i = 0; i < numComments; i++) {
 		component['comments'].push(faker.lorem.sentence());
 	}
+	*/
 
 	return component;
 }

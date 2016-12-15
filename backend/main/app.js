@@ -27,6 +27,8 @@ app.get('/api/images/:numberImages', function(req, res) {
 	res.send(images.getLimit(numberImages));
 });
 
+// TODO: create a search API for image tags
+
 
 app.listen(5000, function() {
   console.log('Example app listening on port 5000');
