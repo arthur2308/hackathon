@@ -1,6 +1,8 @@
 var Clarifai = require('clarifai');
 var faker = require('faker');
 
+var fs = require('fs');
+
 
 var urls = [
 	'https://images.pexels.com/photos/108061/pexels-photo-108061.jpeg?h=350&auto=compress',
@@ -100,8 +102,19 @@ function getLimit(number) {
 	return result;
 }
 
+// writes components to file
+function writeToFile() {
+	var jsonString = JSON.stringify(images);
+	fs.writeFile('myjsonfile.json', jsonString, 'utf8', function(err) {
+		if (err) {
+			console.log(err);
+		}
+	});
+}
+
 function main() {
 	createAllComponents();
+	writeToFile();
 }
 
 main();

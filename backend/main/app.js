@@ -28,6 +28,9 @@ app.get('/api/images/:numberImages', function(req, res) {
 });
 
 // TODO: create a search API for image tags
+app.get('/api/search/:singleTag', function() {
+	
+});
 
 
 app.listen(5000, function() {
