@@ -17,7 +17,24 @@ var urls = [
 	'https://images.pexels.com/photos/212236/pexels-photo-212236.jpeg?h=350&auto=compress',
 	'https://images.pexels.com/photos/217860/pexels-photo-217860.jpeg?h=350&auto=compress',
 	'https://images.pexels.com/photos/24155/pexels-photo.jpg?h=350&auto=compress',
-	'https://images.pexels.com/photos/24155/pexels-photo.jpg?h=350&auto=compress'
+	'https://images.pexels.com/photos/24155/pexels-photo.jpg?h=350&auto=compress',
+	'https://images.pexels.com/photos/157866/sunglasses-glasses-sun-sun-protection-157866.jpeg?h=350&auto=compress&cs=tinysrgb',
+	'https://images.pexels.com/photos/157888/fashion-glasses-go-pro-female-157888.jpeg?h=350&auto=compress',
+	'https://images.pexels.com/photos/157888/fashion-glasses-go-pro-female-157888.jpeg?h=350&auto=compress',
+	'https://images.pexels.com/photos/157907/smile-color-laugh-black-157907.jpeg?h=350&auto=compress',
+	'https://images.pexels.com/photos/6839/fashion-woman-cute-airport.jpg?h=350&auto=compress',
+	'https://images.pexels.com/photos/70845/girl-model-pretty-portrait-70845.jpeg?h=350&auto=compress',
+	'https://images.pexels.com/photos/72699/minimalism-minimal-72699.jpeg?h=350&auto=compress',
+	'https://images.pexels.com/photos/7307/pexels-photo.jpeg?h=350&auto=compress',
+	'https://images.pexels.com/photos/7529/pexels-photo.jpeg?h=350&auto=compress',
+	'https://images.pexels.com/photos/87350/pexels-photo-87350.jpeg?h=350&auto=compress&cs=tinysrgb',
+	'https://images.pexels.com/photos/91986/pexels-photo-91986.jpeg?h=350&auto=compress',
+	'https://images.pexels.com/photos/245931/pexels-photo-245931.jpeg?h=350&auto=compress&cs=tinysrgb',
+	'https://images.pexels.com/photos/246367/pexels-photo-246367.jpeg?h=350&auto=compress&cs=tinysrgb',
+	'https://images.pexels.com/photos/246804/pexels-photo-246804.jpeg?h=350&auto=compress&cs=tinysrgb',
+	'https://images.pexels.com/photos/247836/pexels-photo-247836.jpeg?h=350&auto=compress&cs=tinysrgb',
+	'https://images.pexels.com/photos/25488/pexels-photo-25488.jpg?h=350&auto=compress',
+	'https://images.pexels.com/photos/25772/pexels-photo-25772.jpg?h=350&auto=compress'
 ];
 
 
@@ -25,7 +42,8 @@ var images = {
 	'images': []
 };
 
-images = JSON.parse(fs.readFileSync('./images.json', 'utf8'));
+
+
 
 function getTags(url) {
 	var app = new Clarifai.App(
@@ -53,14 +71,21 @@ function getTags(url) {
 	return tags;
 }
 
-
+// writes components to file
+function writeToFile() {
+	var jsonString = JSON.stringify(images);
+	fs.writeFile('images.json', jsonString, 'utf8', function(err) {
+		if (err) {
+			console.log(err);
+		}
+	});
+}
 
 function createImageComponent(url) {
 	var numLikes = Math.floor((Math.random() * 2000) + 1);
 	var component = {
 		'src' : url,
 		'likes' : numLikes,
-		// 'comments': ['random-comment1', 'random-comment-2'],
 		'width': '30%',
 		'tags': getTags(url),
 		'lightboxImage': {
@@ -69,60 +94,18 @@ function createImageComponent(url) {
 		}
 	};
 
-	/*
-	component['comments'] = [];
-	var numComments = Math.floor((Math.random() * 15) + 1);
-	for (var i = 0; i < numComments; i++) {
-		component['comments'].push(faker.lorem.sentence());
-	}
-	*/
 
 	return component;
 }
 
-function createAllComponents() {
-	// generate a bunch of image components
-	for (var i = 0; i < urls.length; i++) {
-		images['images'].push(createImageComponent(urls[i]));
-	}
-}
-
-function getAllImages() {
-	return images;
-}
-
-// return passed number of random image components
-function getLimit(number) {
-	var totalImages = urls.length;
-	var result = {
-		'images': []
-	};
-	for (var i = 0; i < number; i++) {
-		var randomIndex = Math.floor((Math.random() * totalImages) + 1);
-		result['images'].push(images['images'][randomIndex]);
-	}
-	return result;
-}
-
-// writes components to file
-function writeToFile() {
-	var jsonString = JSON.stringify(images);
-	fs.writeFile('myjsonfile.json', jsonString, 'utf8', function(err) {
-		if (err) {
-			console.log(err);
-		}
-	});
-}
-
 function main() {
-	// createAllComponents();
-	// writeToFile();
+	for (var i = 0; i < urls.length; i++) {
+
+		images['images'].push(createImageComponent(urls[i]));
+
+	}
+	writeToFile();
 }
+
 
 main();
-
-module.exports = {
-	getAll: getAllImages,
-	getLimit: getLimit
-};
-
