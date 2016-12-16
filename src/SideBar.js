@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import $ from 'jquery';
+import App from './App';
 
 class SideBar extends Component {
 	constructor() {
@@ -18,6 +19,7 @@ class SideBar extends Component {
 	handleClickSearch(event) {
 		$('#search').toggleClass('sidebar-icon');
 		// $('#search').toggleClass('sidebar-icon-clicked');
+		console.log("Search clicked!");
 	}
 
 	handleClickTrending(event) {

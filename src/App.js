@@ -14,30 +14,12 @@ class App extends Component {
     constructor() {
         super();
         this.state = {
-            "photos" : []
-        }
-        /*
-        this.state = {
-            "photos" : [
-                {
-                    "src": "https://images.pexels.com/photos/167890/pexels-photo-167890.jpeg?h=350&auto=compress",
-                    "tags":["child","road","tag1"],
-                    "lightboxImage":{
-                        "src": 'https://images.pexels.com/photos/167890/pexels-photo-167890.jpeg?h=350&auto=compress',
-                        "caption": 'Likes: 52'
-                    }
-                },
-                    {
-                        "src": "https://images.pexels.com/photos/192774/pexels-photo-192774.jpeg?h=350&auto=compress",
-                        "tags":["fashion","woman","airport"],
-                        "lightboxImage":{
-                            "src": 'https://images.pexels.com/photos/192774/pexels-photo-192774.jpeg?h=350&auto=compress',
-                            "caption": 'Likes: 54'
-                        }
-                    },
-                ]
-        }; */
+            "photos" : [],
+            "searchMode": false
+        };
+
         this.handleScroll = this.handleScroll.bind(this);
+        this.handleSearch = this.handleSearch.bind(this);
         this.loadMorePhotos = _.debounce(this.loadMorePhotos, 200);
     }
 
@@ -47,46 +29,74 @@ class App extends Component {
     }
 
     handleScroll() {
-        $(window).scroll(function() {
-            if($(window).scrollTop() + $(window).height() > $(document).height() - 100) {
-
-                console.log('Reached bottom');
-                this.loadMorePhotos();
-            }
-        }.bind(this));
+            $(window).scroll(function() {
+                if($(window).scrollTop() + $(window).height() > $(document).height() - 100) {
+                    this.loadMorePhotos();
+                }
+            }.bind(this));
     }
 
-    loadMorePhotos() {
+    handleSearch() {
+        var query = $("#textInput").val();
+
+        if (query) {
+            this.setState({
+                "searchMode" : true
+            });
+        }
+        else {
+            this.setState({
+                "searchMode" : false
+            });
+            return;
+        }
+
         var newPhotos = null;
 
         $.ajax({
-            //url: 'http://localhost:5000/api/images',
-            url: 'https://stark-sierra-45832.herokuapp.com/api/images',
+            url:"http://localhost:5000/api/search/" + query,
             async: false,
-            success: function(data) {
-
+            success: function (data) {
                 newPhotos = data;
-                //console.log(JSON.stringify(this.state.photos.concat(newPhotos)));
-                console.log(newPhotos);
-                /*newPhotos = data.images
-                    .forEach(image => console.log(image));*/
-
-                //console.log(newPhotos);
             },
-            error: function(err) {
-                console.error(err.message);
-            }
+            error: (err) => console.error(err.message)
         });
 
         this.setState({
-            "photos" : this.state.photos ? this.state.photos.concat(newPhotos.images) : newPhotos.images
+            "photos" : newPhotos.images
         });
     }
 
+    loadMorePhotos() {
+
+        if(this.state.searchMode === true) {
+            return;
+        }
+        else {
+            var newPhotos = null;
+
+            $.ajax({
+                url: 'http://localhost:5000/api/images',
+                //url: 'https://stark-sierra-45832.herokuapp.com/api/images',
+                async: false,
+                success: function (data) {
+                    newPhotos = data;
+                },
+                error: function (err) {
+                    console.error(err.message);
+                }
+            });
+
+            this.setState({
+                "photos": this.state.photos ? this.state.photos.concat(newPhotos.images) : newPhotos.images
+            });
+        }
+    }
+
     renderGallery() {
-        return (
-            <Gallery photos={this.state.photos} />
-        );
+            return (
+                <Gallery photos={this.state.photos} />
+            );
     }
 
     endVideo() {
@@ -96,13 +106,12 @@ class App extends Component {
         });
     }
 
-
   render() {
     return (
       <div className="App">
         <SideBar />
         <div id="video-background">
-            <ReactPlayer 
+            <ReactPlayer
                 url='https://www.youtube.com/watch?v=dMw1icYNmFE' 
                 playing 
                 width="100%" 
@@ -112,15 +121,11 @@ class App extends Component {
         <div className="App-header">  
           <img src={logo} className="App-logo" alt="logo" />
           <h2>Winter catalog</h2>
-
+            <input id="textInput" onKeyUp={this.handleSearch}/>
         </div>
-        {/*}
-        <ImageRow />
-        */}
         {
             this.renderGallery()
         }
-        
       </div>
     );
   }
