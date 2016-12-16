@@ -3,7 +3,7 @@ var faker = require('faker');
 
 var fs = require('fs');
 
-
+var globalCounter = 0;
 var urls = [
 	'https://images.pexels.com/photos/108061/pexels-photo-108061.jpeg?h=350&auto=compress',
 	'https://images.pexels.com/photos/135620/pexels-photo-135620.jpeg?h=350&auto=compress',
@@ -81,30 +81,36 @@ function writeToFile() {
 	});
 }
 
-function createImageComponent(url) {
+function createImageComponent() {
+	console.log('created request');
+	if (globalCounter > urls.length) {
+		writeToFile();
+		exit();
+	}
 	var numLikes = Math.floor((Math.random() * 2000) + 1);
 	var component = {
 		'src' : url,
 		'likes' : numLikes,
 		'width': '30%',
-		'tags': getTags(url),
+		'tags': getTags(urls[globalCounter]),
 		'lightboxImage': {
 			'src' : url,
 			'caption' : 'Likes: ' + numLikes
 		}
 	};
-
-
+	globalCounter = globalCounter + 1;
+	images['images'].push(component);
 	return component;
 }
 
 function main() {
-	for (var i = 0; i < urls.length; i++) {
-
-		images['images'].push(createImageComponent(urls[i]));
-
-	}
-	writeToFile();
+	setInterval(function() {
+		createImageComponent();
+	}, 90000000000000);
+	// for (var i = 0; i < urls.length; i++) {
+	// 	images['images'].push(createImageComponent(urls[i]));
+	// }
+	// writeToFile();
 }
 
 
