@@ -3,15 +3,21 @@
 }
 
 .App-logo {
+  /*  
   animation: App-logo-spin infinite 20s linear;
+  */
   height: 80px;
 }
 
 .App-header {
-  background-color: #222;
+  /*
+  background-color: #222;*/
   height: 150px;
   padding: 20px;
+  display: none; 
+  /*
   color: white;
+  */
 }
 
 .App-intro {
@@ -27,3 +33,43 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+#Gallery div {
+  display: inline-block !important;
+  float: none !important;
+  margin-right: 2% !important;
+  margin-left: 2% !important;
+  margin-bottom: 2% !important;
+}
+
+
+.sidebar-icon {
+  height: 50px;
+  width: 50px;
+  background-color: red;
+  color: white;
+  justify-content: center;
+  align-items: center;
+  float: right;
+  display: flex;
+}
+
+.sidebar-icon:hover {
+  cursor: pointer;
+  opacity: 10%;
+}
+
+.sidebar-icon-clicked {
+    height: 50px;
+    width: 200px;
+    background-color: red;
+    color: white;
+    justify-content: center;
+    align-items: center;
+    float: right;
+    display: flex;
+}
+
+
+
+

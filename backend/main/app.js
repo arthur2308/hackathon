@@ -9,10 +9,12 @@ app.use(function(req, res, next) {
   next();
 });
 
+app.use(express.static(__dirname + '/build'));
+
 // sample home page request
 app.get('/', function (req, res) {
 	// TODO: this should serve the main React application
-	res.send('hello world');
+	res.sendfile('./build/index.html');
 });
 
 
@@ -28,6 +30,9 @@ app.get('/api/images/:numberImages', function(req, res) {
 });
 
 // TODO: create a search API for image tags
+app.get('/api/search/:singleTag', function() {
+	
+});
 
 
 app.listen(5000, function() {

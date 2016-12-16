@@ -5,10 +5,18 @@ import $ from 'jquery';
 import Gallery from 'react-photo-gallery'
 import _ from 'lodash';
 
+// react components
+//import VideoBackground from './VideoBackground.js';
+import ReactPlayer from 'react-player'
+import SideBar from './SideBar.js';
+
 class App extends Component {
     constructor() {
         super();
-
+        this.state = {
+            "photos" : []
+        }
+        /*
         this.state = {
             "photos" : [
                 {
@@ -28,7 +36,7 @@ class App extends Component {
                         }
                     },
                 ]
-        };
+        }; */
         this.handleScroll = this.handleScroll.bind(this);
         this.loadMorePhotos = _.debounce(this.loadMorePhotos, 200);
     }
@@ -52,7 +60,8 @@ class App extends Component {
         var newPhotos = null;
 
         $.ajax({
-            url: 'http://localhost:5000/api/images',
+            //url: 'http://localhost:5000/api/images',
+            url: 'https://stark-sierra-45832.herokuapp.com/api/images',
             async: false,
             success: function(data) {
 
@@ -80,15 +89,38 @@ class App extends Component {
         );
     }
 
+    endVideo() {
+        console.log('video has ended');
+        $('#video-background').fadeOut(1000, 'swing', function() {
+            $('.App-header').fadeIn(1500);
+        });
+    }
+
 
   render() {
     return (
       <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Nordstrom Fashion</h2>
+        <SideBar />
+        <div id="video-background">
+            <ReactPlayer 
+                url='https://www.youtube.com/watch?v=dMw1icYNmFE' 
+                playing 
+                width="100%" 
+                height="100%"
+                onEnded={this.endVideo} />
         </div>
-          {this.renderGallery()}
+        <div className="App-header">  
+          <img src={logo} className="App-logo" alt="logo" />
+          <h2>Winter catalog</h2>
+
+        </div>
+        {/*}
+        <ImageRow />
+        */}
+        {
+            this.renderGallery()
+        }
+        
       </div>
     );
   }
