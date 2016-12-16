@@ -1,7 +1,7 @@
 var express = require('express');
 var app = express();
 var images = require('./create-data.js');
-
+// var images = require('./images-object.js');
 
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
@@ -30,8 +30,23 @@ app.get('/api/images/:numberImages', function(req, res) {
 });
 
 // TODO: create a search API for image tags
-app.get('/api/search/:singleTag', function() {
-	
+app.get('/api/search/:singleTag', function(req, res) {
+	// search through image tags
+	var allImages = images.getAll()['images'];
+	var term = req.params['singleTag'].toLowerCase();
+	var results = allImages.filter((image) => {
+		var matches = [];
+		image['tags'].forEach((x) => {
+			// x = tag
+			if (x.toLowerCase().startsWith(term)) {
+				matches.push(x);
+			}
+		});
+		return matches.length > 0;
+	});
+	res.json({
+		'images' : results
+	});
 });
 
 

@@ -25,7 +25,9 @@ var images = {
 	'images': []
 };
 
-images = JSON.parse(fs.readFileSync('./images.json', 'utf8'));
+// images = JSON.parse(fs.readFileSync('./images.json', 'utf8'));
+images = require('./images-object.js');
+console.log(images);
 
 function getTags(url) {
 	var app = new Clarifai.App(
@@ -88,7 +90,7 @@ function createAllComponents() {
 }
 
 function getAllImages() {
-	return images;
+	return require('./images-object.js');
 }
 
 // return passed number of random image components
